@@ -1,15 +1,21 @@
 import React from "react";
 import { SiTinder } from "react-icons/si";
+import { useSelector } from "react-redux";
 
 
 const Navbar = () => {
+
+  const user = useSelector(store=> store.user);
+
   return (
     <div className="navbar bg-gradient-to-r from-pink-500 to-orange-500 text-white px-10 py-5">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl"><SiTinder/>DevTinder</a>
       </div>
       <div className="flex-none gap-2">
-        <div className="dropdown dropdown-end">
+
+        {user && <div className="dropdown dropdown-end flex justify-center items-center gap-4">
+          <h1 className="text-[20px]">{user.firstName}</h1>
           <div
             tabIndex={0}
             role="button"
@@ -18,10 +24,11 @@ const Navbar = () => {
             <div className="w-16 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={user.photoUrl}
               />
             </div>
           </div>
+        
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
@@ -39,7 +46,7 @@ const Navbar = () => {
               <a>Logout</a>
             </li>
           </ul>
-        </div>
+        </div>}
       </div>
     </div>
   );
