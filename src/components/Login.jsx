@@ -10,6 +10,7 @@ import BASE_URL from '../utils/constant'
 const Login = () => {
   const [email, setEmail] = useState("salman@gmail.com");
   const [password, setPassword] = useState("Salman@123");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,13 +25,14 @@ const Login = () => {
       console.log("user added");
       navigate('/');
     } catch (error) {
+      setError(error?.response?.data || "something went wrong")
       console.log(error);
     }
   };
 
   return (
     <div>
-      <div className="card bg-gradient-to-r from-pink-700 to-red-700 w-96 shadow-lg mx-auto mt-12">
+      <div className="card bg-gradient-to-r bg-white w-96 shadow-lg mx-auto mt-12">
         <div className="card-body">
           <h2 className="card-title">Login</h2>
 
@@ -53,7 +55,7 @@ const Login = () => {
               className="grow"
             />
           </label>
-
+          <p className="bg-red-100 border border-red-500 text-red-600 rounded-md p-2">{error}</p>
           <div className="card-actions justify-center">
             <button onClick={handleLogin} className="btn btn-primary">
               Login
