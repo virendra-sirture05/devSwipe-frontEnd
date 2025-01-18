@@ -31,54 +31,62 @@ const Requests = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchRequests();
   }, []);
 
   if (!requests) return;
-  if (requests.length === 0) return <h1 className="text-center mt-10 font-bold text-2xl"> No Requests Found</h1>;
+  if (requests.length === 0)
+    return <h1 className="text-center mt-10 font-bold text-2xl"> No Requests Found</h1>;
 
   return (
     <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connection Requests</h1>
-      {requests.map((request) => {
-        const { _id, firstName, lastName, photoUrl, age, gender, About }=request.fromUserId;
-        return (
-          <div
-            key={_id}
-            className=" flex justify-between items-center m-4 p-4 rounded-lg bg-base-300 w-2/3 mx-auto"
-          >
-            <div>
-              <img
-                alt="photo"
-                className="w-20 h-20 rounded-full"
-                src={photoUrl}
-              />
+      <h1 className="font-bold text-white text-4xl mb-6">Connection Requests</h1>
+      <div className="flex flex-wrap justify-center gap-6 overflow-y-auto">
+        {requests.map((request) => {
+          const { _id, firstName, lastName, photoUrl, age, gender, About } = request.fromUserId;
+          return (
+            <div
+              key={_id}
+              className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/2 p-4"
+            >
+              <div className="bg-white rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+                <div className="flex items-center p-4">
+                  {/* Photo on the left */}
+                  <img
+                    alt="photo"
+                    className="w-20 h-20 rounded-full object-cover border-4 border-red-500"
+                    src={photoUrl}
+                  />
+                  {/* Text content on the right */}
+                  <div className="ml-4 text-left">
+                    <h2 className="font-semibold text-xl text-gray-800 mb-2">
+                      {firstName + " " + lastName}
+                    </h2>
+                    {age && gender && <p className="text-sm text-gray-500">{age + ", " + gender}</p>}
+                    <p className="text-sm text-gray-600 mt-2">{About}</p>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center p-4">
+                  <button
+                    className="bg-red-500 text-white py-2 px-6 rounded-xl hover:bg-red-600 transition-all duration-300"
+                    onClick={() => reviewRequest("rejected", request._id)}
+                  >
+                    Reject
+                  </button>
+                  <button
+                    className="bg-green-500 text-white py-2 px-6 rounded-xl hover:bg-green-600 transition-all duration-300"
+                    onClick={() => reviewRequest("accepted", request._id)}
+                  >
+                    Accept
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="text-left mx-4 ">
-              <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
-              </h2>
-              {age && gender && <p>{age + ", " + gender}</p>}
-              <p>{About}</p>
-            </div>
-            <div>
-              <button
-                className="btn btn-primary mx-2"
-                onClick={() => reviewRequest("rejected", request._id)}
-              >
-                Reject
-              </button>
-              <button
-                className="btn btn-secondary mx-2"
-                onClick={() => reviewRequest("accepted", request._id)}
-              >
-                Accept
-              </button>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

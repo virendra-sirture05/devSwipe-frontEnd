@@ -7,49 +7,57 @@ import { addConnections } from '../utils/slice/connectionSlice';
 const Connections = () => {
 
     const dispatch = useDispatch();
-    const connections = useSelector(state=>state.connection);
+    const connections = useSelector(state => state.connection);
     console.log(connections);
-    const fetchConnections = async()=>{
+
+    const fetchConnections = async () => {
         try {
-            const res = await axios.get(BASE_URL+"/user/connections",{withCredentials: true})
+            const res = await axios.get(BASE_URL + "/user/connections", { withCredentials: true })
             dispatch(addConnections(res.data.data));
         } catch (error) {
             console.log(error);
         }
     }
-    useEffect(()=>{
+
+    useEffect(() => {
         fetchConnections();
-    },[])
+    }, [])
 
-    if (!connections) return;
-    if (connections.length === 0) return <h1> No Connections Found</h1>;
+    if (!connections) return null;
+    if (connections.length === 0) return <h1 className='text-center font-bold text-3xl mt-10 text-white'>No Connections Found</h1>;
+
     return (
-      <div className="text-center my-10">
-        <h1 className="text-bold text-white text-3xl">Connections</h1>
-        {connections.map((connection,index) => {
-          const { firstName, lastName, photoUrl, age, gender, About } =
-            connection;
-          return (
-            <div key={index} className=" flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto">
-              <div>
-                <img
-                  alt="photo"
-                  className="w-20 h-20 rounded-full"
-                  src={photoUrl}
-                />
-              </div>
-              <div className="text-left mx-4 ">
-                <h2 className="font-bold text-xl">
-                  {firstName + " " + lastName}
-                </h2>
-                {age && gender && <p>{age + ", " + gender}</p>}
-                <p>{About}</p>
-              </div>
+        <div className="text-center my-10">
+            <h1 className="font-bold text-white text-4xl mb-6">Connections</h1>
+            <div className="flex flex-wrap justify-center gap-6">
+                {connections.map((connection, index) => {
+                    const { firstName, lastName, photoUrl, age, gender, About } = connection;
+                    return (
+                        <div key={index} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/2 p-4">
+                            <div className="bg-white rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+                                <div className="flex items-center p-4">
+                                    {/* Photo on the left */}
+                                    <img
+                                        alt="photo"
+                                        className="w-20 h-20 rounded-full object-cover border-4 border-red-500"
+                                        src={photoUrl}
+                                    />
+                                    {/* Text content on the right */}
+                                    <div className="ml-4 text-left">
+                                        <h2 className="font-semibold text-xl text-gray-800 mb-2">
+                                            {firstName + " " + lastName}
+                                        </h2>
+                                        {age && gender && <p className="text-sm text-gray-500">{age + ", " + gender}</p>}
+                                        <p className="text-sm text-gray-600 mt-2">{About}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
-          );
-        })}
-      </div>
+        </div>
     );
-  };
+};
 
-export default Connections
+export default Connections;

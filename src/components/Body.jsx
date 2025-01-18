@@ -30,10 +30,10 @@ const Body = () => {
   },[])
 
   return (
-    <div className=''>
+    <div className='overlay overflow-y-auto'>
         <Navbar/>
         <Outlet/>
-        <Footer/>
+        {/* <Footer/> */}
     </div>
   )
 }
