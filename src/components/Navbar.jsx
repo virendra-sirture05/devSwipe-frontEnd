@@ -27,7 +27,7 @@ const Navbar = () => {
       <div className="flex-1">
         <Link to={"/"} className="btn btn-ghost text-3xl">
           <SiTinder />
-          DevTinder
+          DevSwipe
         </Link>
       </div>
       <div className="flex-none gap-2">
@@ -73,6 +73,14 @@ const Navbar = () => {
                   className="flex justify-between items-center text-lg font-semibold"
                 >
                   Requests
+                </Link>
+              </li>
+              <li className="hover:bg-pink-100 transition-all duration-200 rounded-md">
+                <Link
+                  className="flex justify-between items-center text-lg font-semibold"
+                  to={"/premium"}
+                >
+                  Premium
                 </Link>
               </li>
               <li className="hover:bg-pink-100 transition-all duration-200 rounded-md">
