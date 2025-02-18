@@ -75,14 +75,14 @@ const Navbar = () => {
                   Requests
                 </Link>
               </li>
-              <li className="hover:bg-pink-100 transition-all duration-200 rounded-md">
+              {/* <li className="hover:bg-pink-100 transition-all duration-200 rounded-md">
                 <Link
                   className="flex justify-between items-center text-lg font-semibold"
                   to={"/premium"}
                 >
                   Premium
                 </Link>
-              </li>
+              </li> */}
               <li className="hover:bg-pink-100 transition-all duration-200 rounded-md">
                 <a
                   onClick={handleLogout}
